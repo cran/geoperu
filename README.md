@@ -6,9 +6,14 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/geoperu)](https://CRAN.R-project.org/package=geoperu)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/geoperu?color=green)](https://cran.r-project.org/package=geoperu)
+[![](http://cranlogs.r-pkg.org/badges/last-week/geoperu?color=green)](https://cran.r-project.org/package=geoperu)
+[![Codecov test
+coverage](https://codecov.io/gh/PaulESantos/geoperu/branch/main/graph/badge.svg)](https://app.codecov.io/gh/PaulESantos/geoperu?branch=main)
+[![R-CMD-check](https://github.com/PaulESantos/geoperu/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/PaulESantos/geoperu/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The `geoperu` package provides a convenient interface to access official
@@ -29,7 +34,7 @@ you can use the `get_geo_peru()` function.
 ``` r
 
 library(geoperu)
-#> This is geoperu 0.0.0.1
+#> This is geoperu 0.0.0.2
 
 cusco <- geoperu::get_geo_peru(geography = "CUSCO", 
                                   level = "dep",
@@ -134,6 +139,35 @@ plot2 <- cusco_simplified |>
 plot1 + plot2
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" /> You
-can customize the plot by adding additional layers, adjusting styles,
-and adding labels according to your specific needs.
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
+`geoperu` also provides access to spatial information of natural
+protected areas in Peru. These areas, managed and declared by the
+National Service of Natural Protected Areas (SERNAP), encompass a
+diverse range of ecosystems. The `get_anp_peru()` function allows users
+to download spatial data representing these protected areas directly
+into their R environment.
+
+``` r
+manu <- get_anp_peru(anp = "manu")
+manu
+#> Simple feature collection with 1 feature and 4 fields
+#> Geometry type: POLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -72.41719 ymin: -13.2059 xmax: -70.85217 ymax: -11.31585
+#> Geodetic CRS:  WGS 84
+#>          anp_cate anp_nombre anp_sect              anp_ubpo
+#> 1 Parque Nacional       Manu     <NA> Cusco y Madre de Dios
+#>                             geom
+#> 1 POLYGON ((-71.36212 -11.656...
+
+manu |> 
+  ggplot() +
+  geom_sf() +
+  theme_bw()
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+You can customize the plot by adding additional layers, adjusting
+styles, and adding labels according to your specific needs.
